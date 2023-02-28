@@ -18,8 +18,6 @@ export default function RootLayout({
 
 const Main = styled.div`
   height: 100%;
-  background-color: red;
-
   display: grid;
   grid-template-columns: 40% auto;
 `

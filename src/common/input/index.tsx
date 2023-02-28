@@ -10,7 +10,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 export const Input: React.FC<Props> = ({ label, ...props }) => {
   return (
     <Fieldset>
-      <Label>{label}</Label>
+      <Label htmlFor={props.name}>{label}</Label>
       <InputArea {...props} />
     </Fieldset>
   )
