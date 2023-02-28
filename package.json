@@ -45,11 +45,11 @@
   },
   "lint-staged": {
     "*.ts": [
-      "eslint --fix --max-warnings=0",
+      "eslint --fix",
       "prettier --write"
     ],
     "*.tsx": [
-      "eslint --fix --max-warnings=0",
+      "eslint --fix",
       "prettier --write"
     ]
   }
