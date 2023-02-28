@@ -1,10 +1,10 @@
 'use client'
 
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import StyledComponentsRegistry from '@lib/registry'
 import { GlobalStyles, lightTheme } from '@styles'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'styled-components'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import StyledComponentsRegistry from '@lib/registry'
 
 const inter = Inter({ subsets: ['latin'] })
 

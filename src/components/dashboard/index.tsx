@@ -2,13 +2,13 @@ import { Diagram } from '@components/diagram'
 import { Forecast } from '@components/forecast'
 import { Showcase } from '@components/showcase'
 import {
-  HouseIcon,
+  BalanceIcon,
   DownloadIcon,
   ExitIcon,
   GearIcon,
-  NotificationIcon,
+  HouseIcon,
   MenuIcon,
-  BalanceIcon,
+  NotificationIcon,
   OutcomeIcon,
 } from '@icons'
 import { IncomesIcon } from '@icons/incomes'
