@@ -1,12 +1,51 @@
+'use client'
+
+import { Controller, useForm } from 'react-hook-form'
 import { Button, Input } from '@common'
+import { useLoginMutation } from '@generated'
+import { DevTool } from '@hookform/devtools'
 import Link from 'next/link'
 import styled from 'styled-components'
 
+interface FormProps {
+  identifier: string
+  password: string
+}
+
 export const LoginPage: React.FC = () => {
+  const [login] = useLoginMutation()
+  const { control, handleSubmit } = useForm<FormProps>()
+
+  const onLogin = (data: FormProps) => login({ variables: { input: data } })
+
   return (
-    <Form>
-      <Input type={'email'} label="Email" />
-      <Input type={'password'} label="Пароль" />
+    <Form onSubmit={handleSubmit(onLogin)}>
+      <Controller
+        control={control}
+        name="identifier"
+        render={({ field: { onChange, onBlur, name } }) => (
+          <Input
+            name={name}
+            type={'email'}
+            label="Email"
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="password"
+        render={({ field: { onChange, onBlur, name } }) => (
+          <Input
+            name={name}
+            type="password"
+            label="Пароль"
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        )}
+      />
       <Button>Войти</Button>
       <Actions>
         <Checkbox>
@@ -15,6 +54,7 @@ export const LoginPage: React.FC = () => {
         </Checkbox>
         <Link href={'/password-recover'}>Забыли пароль?</Link>
       </Actions>
+      {window && <DevTool control={control} />}
     </Form>
   )
 }
