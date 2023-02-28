@@ -4,6 +4,7 @@ import { GlobalStyles, lightTheme } from '@styles'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'styled-components'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import StyledComponentsRegistry from '@lib/registry'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,10 +22,12 @@ export default function RootLayout({
     <html lang="en" className={inter.className}>
       <body>
         <ApolloProvider client={client}>
-          <ThemeProvider theme={lightTheme}>
-            <GlobalStyles />
-            {children}
-          </ThemeProvider>
+          <StyledComponentsRegistry>
+            <ThemeProvider theme={lightTheme}>
+              <GlobalStyles />
+              {children}
+            </ThemeProvider>
+          </StyledComponentsRegistry>
         </ApolloProvider>
       </body>
     </html>
