@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import styled from 'styled-components'
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode

@@ -13,10 +13,16 @@ import {
 } from '@icons'
 import { IncomesIcon } from '@icons/incomes'
 import { NearestDeliveryIcon } from '@icons/nearest-delivery'
+import { useUserStore } from '@store'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import styled from 'styled-components'
 
 export const DashboardPage: React.FC = () => {
+  const router = useRouter()
+  const user = useUserStore((store) => store.user)
+  if (!user.id) return router.push('/login')
+
   return (
     <Grid>
       <Nav>
@@ -56,7 +62,6 @@ export const DashboardPage: React.FC = () => {
             title={'Убыток'}
             Icon={<OutcomeIcon />}
             display={12300 + '₽'}
-            negative
           />
           <Forecast
             title={'Ближайшая доставка'}

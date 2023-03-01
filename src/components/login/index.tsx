@@ -4,7 +4,10 @@ import { Controller, useForm } from 'react-hook-form'
 import { Button, Input } from '@common'
 import { useLoginMutation } from '@generated'
 import { DevTool } from '@hookform/devtools'
+import { setUser } from '@store'
+import jsCookie from 'js-cookie'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import styled from 'styled-components'
 
 interface FormProps {
@@ -14,9 +17,15 @@ interface FormProps {
 
 export const LoginPage: React.FC = () => {
   const [login] = useLoginMutation()
+  const router = useRouter()
   const { control, handleSubmit } = useForm<FormProps>()
 
-  const onLogin = (data: FormProps) => login({ variables: { input: data } })
+  const onLogin = async (form: FormProps) => {
+    const { data, errors } = await login({ variables: { input: form } })
+    jsCookie.set('access-token', data?.login.jwt ?? '')
+    setUser(data?.login.user)
+    router.push('/dashboard')
+  }
 
   return (
     <Form onSubmit={handleSubmit(onLogin)}>
