@@ -5,6 +5,7 @@ export const lightTheme = {
     border: colors.deep_blue,
     color: colors.white,
     bg: colors.deep_blue,
+    hover: colors.light_blue,
   },
   content: {
     bg: colors.dark_white,
@@ -18,6 +19,16 @@ export const lightTheme = {
       color: colors.dark_red,
     },
     positive: {
+      bg: colors.light_green,
+      color: colors.dark_green,
+    },
+  },
+  alert: {
+    failed: {
+      bg: colors.bright_red,
+      color: colors.dark_red,
+    },
+    succeded: {
       bg: colors.light_green,
       color: colors.dark_green,
     },
