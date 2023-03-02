@@ -4,7 +4,7 @@ import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
 interface UserStore {
-  user: User
+  user: Partial<User>
   setUser: (user: User) => void
 }
 
@@ -12,14 +12,17 @@ export const useUserStore = create<UserStore>()(
   devtools(
     immer((set) => ({
       user: {
-        id: '',
+        // TODO: REWRITE STORE
+        id: undefined,
         email: '',
         username: '',
         blocked: false,
         confirmed: false,
+        role: undefined,
       },
       setUser: (user) => set({ user }),
     })),
+    { name: 'user-store' },
   ),
 )
 
