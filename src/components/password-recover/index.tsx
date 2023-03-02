@@ -1,16 +1,48 @@
-import { Button, Input } from '@common'
+import { Controller, useForm } from 'react-hook-form'
+import { Alert, Button, Input } from '@common'
+import { useForgotPasswordMutation } from '@generated'
 import styled from 'styled-components'
 
+interface FormProps {
+  email: string
+}
+
 export const PasswordRecoverPage: React.FC = () => {
+  const [sendInstructions, { error, called }] = useForgotPasswordMutation()
+  const { control, handleSubmit } = useForm<FormProps>()
+
+  const onRecover = async (form: FormProps) =>
+    await sendInstructions({ variables: { input: form.email } })
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onRecover)}>
+      {called && (
+        <Alert
+          text={
+            'Если указанный вами email существует, то на него было отправлено письмо с инструкцией по восстановлению пароля'
+          }
+        />
+      )}
       <Title>Забыли пароль?</Title>
       <p>
         Введите адрес электронный почты, который был привязан к вашему аккаунту,
         и мы отправим вам письмо с инструкцией по восстановлению пароля
       </p>
-      <Input type={'email'} label="Email" />
-      <Button>Отправить</Button>
+      <Controller
+        control={control}
+        name="email"
+        render={({ field: { onChange, onBlur, name } }) => (
+          <Input
+            name={name}
+            required
+            type="email"
+            label="Email"
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        )}
+      />
+      <Button type="submit">Отправить</Button>
     </Form>
   )
 }
