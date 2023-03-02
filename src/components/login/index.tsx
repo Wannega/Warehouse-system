@@ -1,13 +1,11 @@
 'use client'
 
 import { Controller, useForm } from 'react-hook-form'
-import { Button, Input } from '@common'
+import { Alert, Button, Input } from '@common'
 import { useLoginMutation } from '@generated'
 import { DevTool } from '@hookform/devtools'
-import { setUser } from '@store'
-import jsCookie from 'js-cookie'
+import { useDelayedRedirect } from '@utils'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import styled from 'styled-components'
 
 interface FormProps {
@@ -16,25 +14,36 @@ interface FormProps {
 }
 
 export const LoginPage: React.FC = () => {
-  const [login] = useLoginMutation()
-  const router = useRouter()
+  const [login, { error, called }] = useLoginMutation()
+  const [redirect] = useDelayedRedirect()
   const { control, handleSubmit } = useForm<FormProps>()
 
   const onLogin = async (form: FormProps) => {
-    const { data, errors } = await login({ variables: { input: form } })
-    jsCookie.set('access-token', data?.login.jwt ?? '')
-    setUser(data?.login.user)
-    router.push('/dashboard')
+    const { errors } = await login({ variables: { input: form } })
+
+    if (!errors) {
+      redirect('/dashboard')
+    }
   }
 
   return (
     <Form onSubmit={handleSubmit(onLogin)}>
+      {called && (
+        <Alert
+          text={
+            error?.message ??
+            'Авторизация пройдена успешно. Через пару секунд вы будете перенаправлены на главную страницу...'
+          }
+          failed={!!error}
+        />
+      )}
       <Controller
         control={control}
         name="identifier"
         render={({ field: { onChange, onBlur, name } }) => (
           <Input
             name={name}
+            required
             type={'email'}
             label="Email"
             onChange={onChange}
@@ -48,6 +57,7 @@ export const LoginPage: React.FC = () => {
         render={({ field: { onChange, onBlur, name } }) => (
           <Input
             name={name}
+            required
             type="password"
             label="Пароль"
             onChange={onChange}
