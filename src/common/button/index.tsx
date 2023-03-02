@@ -19,4 +19,10 @@ const PressableArea = styled.button`
   padding: 7.5px 15px;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.1s;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.button.hover};
+    background-color: ${({ theme }) => theme.button.hover};
+  }
 `
