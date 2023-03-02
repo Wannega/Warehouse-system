@@ -1,9 +1,11 @@
 'use client'
 
+import { AuthProvider } from '@hoc'
+
 export default function WorkspaceLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return <AuthProvider>{children}</AuthProvider>
 }

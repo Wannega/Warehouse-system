@@ -1,17 +1,13 @@
 'use client'
 
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import StyledComponentsRegistry from '@lib/registry'
 import { GlobalStyles, lightTheme } from '@styles'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'styled-components'
 
-const inter = Inter({ subsets: ['latin'] })
+import { ApolloSetup } from './_apollo'
 
-const client = new ApolloClient({
-  uri: process.env.NEXT_PUBLIC_STRAPI_API + '/graphql',
-  cache: new InMemoryCache(),
-})
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
@@ -21,14 +17,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body>
-        <ApolloProvider client={client}>
+        <ApolloSetup>
           <StyledComponentsRegistry>
             <ThemeProvider theme={lightTheme}>
               <GlobalStyles />
               {children}
             </ThemeProvider>
           </StyledComponentsRegistry>
-        </ApolloProvider>
+        </ApolloSetup>
       </body>
     </html>
   )
