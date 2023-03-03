@@ -1,0 +1,11 @@
+query me{
+    me{
+        id
+        username
+        email
+        blocked
+        role{
+             name
+        }
+    }  
+}
