@@ -76,7 +76,6 @@ export const LoginPage: React.FC = () => {
         </Checkbox>
         <Link href={'/password-recover'}>Забыли пароль?</Link>
       </Actions>
-      {window && <DevTool control={control} />}
     </Form>
   )
 }
