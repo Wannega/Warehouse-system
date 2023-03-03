@@ -57,7 +57,6 @@ export const client = new ApolloClient({
     watchQuery: {
       fetchPolicy: 'no-cache',
     },
-    q,
   },
 
   ssrMode: true,
