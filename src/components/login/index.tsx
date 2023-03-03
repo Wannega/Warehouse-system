@@ -14,7 +14,9 @@ interface FormProps {
 }
 
 export const LoginPage: React.FC = () => {
-  const [login, { error, called }] = useLoginMutation()
+  const [login, { error, called, data, loading }] = useLoginMutation({
+    fetchPolicy: 'no-cache',
+  })
   const [redirect] = useDelayedRedirect()
   const { control, handleSubmit } = useForm<FormProps>()
 
@@ -31,10 +33,11 @@ export const LoginPage: React.FC = () => {
       {called && (
         <Alert
           text={
-            error?.message ??
-            'Авторизация пройдена успешно. Через пару секунд вы будете перенаправлены на главную страницу...'
+            !!error?.message
+              ? 'Произошла ошибка во время отправки запроса. Проверьте правильность введеных вами данных'
+              : 'Авторизация пройдена успешно. Через несколько секунд вы будете перенаправлены на главную страницу...'
           }
-          failed={!!error}
+          failed={!!error?.message || !data}
         />
       )}
       <Controller
@@ -68,7 +71,7 @@ export const LoginPage: React.FC = () => {
       <Button>Войти</Button>
       <Actions>
         <Checkbox>
-          <input name="checkbox" type={'checkbox'} />
+          <input id="checkbox" name="checkbox" type={'checkbox'} />
           <label htmlFor="checkbox">Запомнить меня</label>
         </Checkbox>
         <Link href={'/password-recover'}>Забыли пароль?</Link>
