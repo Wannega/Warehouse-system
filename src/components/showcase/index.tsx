@@ -1,13 +1,18 @@
+'use client'
+
+import { useMeQuery } from '@generated'
 import Image from 'next/image'
 import styled from 'styled-components'
 
 export const Showcase: React.FC = () => {
+  const { data } = useMeQuery()
+
   return (
     <Box>
       <Avatar src={'/photo.png'} width={50} height={50} alt={'photo'} />
       <Data>
-        <Name>Ярослав Волох</Name>
-        <Role>Администратор</Role>
+        <Name>{data?.me?.username}</Name>
+        <Role>{data?.me?.role?.name}</Role>
       </Data>
     </Box>
   )

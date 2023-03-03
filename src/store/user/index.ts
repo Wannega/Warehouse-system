@@ -13,12 +13,12 @@ export const useUserStore = create<UserStore>()(
     immer((set) => ({
       user: {
         // TODO: REWRITE STORE
-        id: undefined,
+        id: '',
         email: '',
         username: '',
         blocked: false,
         confirmed: false,
-        role: undefined,
+        role: '',
       },
       setUser: (user) => set({ user }),
     })),

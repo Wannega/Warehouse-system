@@ -11,7 +11,7 @@ export const Input: React.FC<Props> = ({ label, ...props }) => {
   return (
     <Fieldset>
       <Label htmlFor={props.name}>{label}</Label>
-      <InputArea {...props} />
+      <InputArea {...props} id={props.name} />
     </Fieldset>
   )
 }

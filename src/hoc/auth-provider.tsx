@@ -1,6 +1,7 @@
 'use client'
 
-import { useUserStore } from '@store'
+import { useEffect } from 'react'
+import { useMeQuery } from '@generated'
 import { useRouter } from 'next/navigation'
 
 interface Props {
@@ -9,14 +10,14 @@ interface Props {
 }
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
-  const user = useUserStore((state) => state.user)
+  const { data, loading } = useMeQuery()
   const router = useRouter()
 
-  if (user.blocked || !user.id) {
-    router.push('/login')
-
-    return <></>
-  }
+  useEffect(() => {
+    if (data?.me?.blocked || (!data?.me?.id && !loading)) {
+      router.push('/login')
+    }
+  }, [data?.me?.id, data?.me?.blocked, router, loading])
 
   return <>{children}</>
 }

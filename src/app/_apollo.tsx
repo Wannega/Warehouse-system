@@ -2,6 +2,7 @@ import {
   ApolloClient,
   ApolloLink,
   ApolloProvider,
+  concat,
   createHttpLink,
   InMemoryCache,
 } from '@apollo/client'
@@ -20,32 +21,29 @@ const httpLink = createHttpLink({
 //   console.log(networkError)
 // })
 
-// const authLink = setContext((_, { headers }) => {
-//   const token = jsCookie.get('bearer-token')
+const authLink = setContext((_, { headers }) => {
+  const token = jsCookie.get('access-token')
 
-//   return {
-//     headers: {
-//       ...headers,
-//       authorization: token ? `Bearer ${token}` : '',
-//     },
-//   }
-// })
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  }
+})
 
 const signLink = new ApolloLink((operation, forward) => {
   return forward(operation).map((rawData) => {
-    const searchField = {
-      login: 'login',
-      resetPassword: 'resetPassword',
-    }[operation.operationName]
-
     if (
       operation.operationName === 'login' ||
       operation.operationName === 'resetPassword'
     ) {
-      // TODO: ADD TYPES
+      // TODO: REFACTOR
       const data = rawData.data
-      jsCookie.set('access-token', data[searchField]?.jwt ?? '')
-      setUser(data[searchField]?.user)
+      jsCookie.set(
+        'access-token',
+        (data && data[operation.operationName as keyof typeof data]?.jwt) ?? '',
+      )
     }
 
     return rawData
@@ -55,8 +53,15 @@ const signLink = new ApolloLink((operation, forward) => {
 export const client = new ApolloClient({
   uri: process.env.NEXT_PUBLIC_STRAPI_API + '/graphql',
   cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+    },
+    q,
+  },
+
   ssrMode: true,
-  link: signLink.concat(httpLink),
+  link: signLink.concat(authLink.concat(httpLink)),
 })
 
 interface Props {
