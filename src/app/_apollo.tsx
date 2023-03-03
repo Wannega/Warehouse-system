@@ -2,14 +2,10 @@ import {
   ApolloClient,
   ApolloLink,
   ApolloProvider,
-  concat,
   createHttpLink,
   InMemoryCache,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
-import { onError } from '@apollo/client/link/error'
-import { LoginMutation } from '@generated'
-import { setUser } from '@store'
 import jsCookie from 'js-cookie'
 
 const httpLink = createHttpLink({
