@@ -1,20 +1,16 @@
+'use client'
+
 import { Diagram } from '@components/diagram'
 import { Forecast } from '@components/forecast'
 import { Showcase } from '@components/showcase'
-import {
-  BalanceIcon,
-  DownloadIcon,
-  HouseIcon,
-  MenuIcon,
-  NotificationIcon,
-  OutcomeIcon,
-} from '@icons'
+import { BalanceIcon, MenuIcon, NotificationIcon, OutcomeIcon } from '@icons'
 import { IncomesIcon } from '@icons/incomes'
 import { NearestDeliveryIcon } from '@icons/nearest-delivery'
 import Image from 'next/image'
 import styled from 'styled-components'
 
 import { BottomMenuBar } from './bottom-menu.bar'
+import { TopMenuBar } from './top-menu.bar'
 
 export const DashboardPage: React.FC = () => {
   return (
@@ -31,8 +27,7 @@ export const DashboardPage: React.FC = () => {
         <Bar>
           <Logo src={'/photo.png'} width={50} height={50} alt={'photo'} />
           <Routes>
-            <HouseIcon />
-            <DownloadIcon />
+            <TopMenuBar />
           </Routes>
         </Bar>
         <Routes>

@@ -3,7 +3,6 @@
 import { Controller, useForm } from 'react-hook-form'
 import { Alert, Button, Input } from '@common'
 import { useLoginMutation } from '@generated'
-import { DevTool } from '@hookform/devtools'
 import { useDelayedRedirect } from '@utils'
 import Link from 'next/link'
 import styled from 'styled-components'
@@ -14,16 +13,14 @@ interface FormProps {
 }
 
 export const LoginPage: React.FC = () => {
-  const [login, { error, called, data, loading }] = useLoginMutation({
-    fetchPolicy: 'no-cache',
-  })
+  const [login, { error, called, data, loading }] = useLoginMutation({})
   const [redirect] = useDelayedRedirect()
   const { control, handleSubmit } = useForm<FormProps>()
 
   const onLogin = async (form: FormProps) => {
     const { errors } = await login({ variables: { input: form } })
 
-    if (!errors) {
+    if (!loading && !errors) {
       redirect('/dashboard')
     }
   }
