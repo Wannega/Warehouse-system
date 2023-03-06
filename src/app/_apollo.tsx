@@ -10,6 +10,7 @@ import jsCookie from 'js-cookie'
 
 const httpLink = createHttpLink({
   uri: process.env.NEXT_PUBLIC_STRAPI_API + '/graphql',
+  credentials: 'same-origin',
 })
 
 // TODO:  CHECK TOKEN VALIDITY PER EACH REQUEST
@@ -22,8 +23,8 @@ const authLink = setContext((_, { headers }) => {
 
   return {
     headers: {
+      authorization: token ? `bearer ${token}` : '',
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
     },
   }
 })
@@ -39,6 +40,7 @@ const signLink = new ApolloLink((operation, forward) => {
       jsCookie.set(
         'access-token',
         (data && data[operation.operationName as keyof typeof data]?.jwt) ?? '',
+        { expires: 1 },
       )
     }
 
@@ -49,14 +51,9 @@ const signLink = new ApolloLink((operation, forward) => {
 export const client = new ApolloClient({
   uri: process.env.NEXT_PUBLIC_STRAPI_API + '/graphql',
   cache: new InMemoryCache(),
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: 'no-cache',
-    },
-  },
-
-  ssrMode: true,
   link: signLink.concat(authLink.concat(httpLink)),
+  ssrMode: true,
+  credentials: 'same-origin',
 })
 
 interface Props {
