@@ -1,6 +1,6 @@
 'use client'
 
-import { PasswordResetPage } from '@components'
+import { PasswordResetPage } from '@screens'
 
 export default function Page() {
   return <PasswordResetPage />

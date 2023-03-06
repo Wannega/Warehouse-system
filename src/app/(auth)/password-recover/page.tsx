@@ -1,6 +1,6 @@
 'use client'
 
-import { PasswordRecoverPage } from '@components'
+import { PasswordRecoverPage } from '@screens'
 
 export default function Page() {
   return <PasswordRecoverPage />
