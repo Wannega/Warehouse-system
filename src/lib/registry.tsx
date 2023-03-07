@@ -1,8 +1,10 @@
 'use client'
 
 import React, { useState } from 'react'
+import { lightTheme } from '@styles'
 import { useServerInsertedHTML } from 'next/navigation'
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 
 export default function StyledComponentsRegistry({
   children,

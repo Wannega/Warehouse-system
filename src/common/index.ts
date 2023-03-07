@@ -1,5 +1,2 @@
-export * from './input'
-export * from './button'
-export * from './section'
-export * from './alert'
-export * from './modal'
+export { Button } from './button'
+export { Input } from './input'

@@ -2,35 +2,22 @@ import { colors } from './colors'
 
 export const lightTheme = {
   button: {
-    border: colors.deep_blue,
+    border: colors.dark_blue,
     color: colors.white,
-    bg: colors.deep_blue,
-    hover: colors.light_blue,
+    bg: colors.purple,
   },
-  content: {
-    bg: colors.dark_white,
-  },
-  section: {
-    bg: colors.white,
-  },
-  forecast: {
-    negative: {
-      bg: colors.light_red,
-      color: colors.dark_red,
+  auth: {
+    description: {
+      color: colors.gray,
     },
-    positive: {
-      bg: colors.light_green,
-      color: colors.dark_green,
+    recover: {
+      color: colors.purple,
     },
   },
-  alert: {
-    failed: {
-      bg: colors.bright_red,
-      color: colors.dark_red,
-    },
-    succeded: {
-      bg: colors.light_green,
-      color: colors.dark_green,
+  input: {
+    border: {
+      focused: colors.purple,
+      unfocused: colors.gray,
     },
   },
 }

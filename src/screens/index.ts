@@ -1,5 +1,1 @@
-export { DashboardPage } from './dashboard'
-export { LoginPage } from './login'
-export { PasswordRecoverPage } from './password-recover'
-export { PasswordResetPage } from './password-reset'
-export { StoragePage } from './storage'
+export { SignInPage } from './sign-in'

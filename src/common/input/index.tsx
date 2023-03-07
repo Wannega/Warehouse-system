@@ -1,46 +1,38 @@
-'use client'
-
 import { InputHTMLAttributes } from 'react'
-import styled from 'styled-components'
+import { VisibilityIcon } from '@icons'
+import { styled } from 'styled-components'
+import { prop } from 'styled-tools'
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string
+type HTMLInputProps = InputHTMLAttributes<HTMLButtonElement>
+
+interface Props extends HTMLInputProps {
+  variant?: 'primary' | 'outlined'
 }
 
-export const Input: React.FC<Props> = ({ label, ...props }) => {
+export const Input: React.FC<Props> = ({ ...props }) => {
+  const withVisibilityIcon = props.type === 'submit'
+
   return (
-    <Fieldset>
-      <Label htmlFor={props.name}>{label}</Label>
-      <InputArea {...props} id={props.name} />
-    </Fieldset>
+    <Box>
+      <InputArea {...props} />
+      {withVisibilityIcon && <VisibilityIcon />}
+    </Box>
   )
 }
 
-const Fieldset = styled.fieldset`
+const Box = styled.div`
   display: flex;
-  flex-direction: column;
-  border: none;
-  color: rgb(78, 78, 78);
-  padding: 0px;
+  padding: 12.5px 10px;
+  border: 1px solid lightgray;
+  border-radius: 7.5px;
 
   &:focus-within {
-    color: $primary;
+    border-color: ${prop('theme.input.border.focused')};
   }
-`
-
-const Label = styled.label`
-  margin-bottom: 2.5px;
 `
 const InputArea = styled.input`
+  flex: 1;
+  border: none;
   outline: none;
-  border-radius: 2.5px;
-  border-style: solid;
-  border-color: rgb(204, 204, 204);
-  border-width: 0.5px;
-  height: 27.5px;
-
-  &:focus {
-    border-style: solid;
-    border-color: $primary;
-  }
+  /* background-color:  */
 `

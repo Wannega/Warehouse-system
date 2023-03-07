@@ -1,37 +1,29 @@
-'use client'
-
 import { ButtonHTMLAttributes } from 'react'
 import styled from 'styled-components'
+import { ifProp, prop } from 'styled-tools'
 
-enum ButtonType {
-  primary = 'primary',
-  outlined = 'outlined',
-}
+type HTMLButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  label?: string
-  variant?: keyof typeof ButtonType
+interface Props extends HTMLButtonProps {
+  variant?: 'primary' | 'outlined'
 }
 
 type StyledProps = Pick<Props, 'variant'>
 
 export const Button: React.FC<Props> = ({ variant = 'primary', ...props }) => {
-  return <PressableArea variant={variant} {...props} />
+  return <Pressable variant={variant} {...props} />
 }
 
-const PressableArea = styled.button<StyledProps>`
-  border: 1px solid ${({ theme }) => theme.button.border};
-  background-color: ${({ theme, variant }) =>
-    variant === 'primary' ? theme.button.bg : 'transparent'};
-  color: ${({ theme, variant }) =>
-    variant === 'primary' ? theme.button.color : theme.button.bg};
-  font-size: 1.5ch;
-  padding: 7.5px 15px;
-  border-radius: 5px;
+const Pressable = styled.button<StyledProps>`
+  background-color: ${ifProp(
+    { variant: 'primary' },
+    prop('theme.button.bg', ''),
+    'transparent',
+  )};
+  font-size: 12pt;
+  border: ${prop('theme.button.border')};
+  padding: 12.5px 10px;
+  border-radius: 7.5px;
+  color: white;
   cursor: pointer;
-  transition: all 0.1s;
-
-  &:hover {
-    opacity: 0.7;
-  }
 `

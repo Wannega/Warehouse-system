@@ -1,6 +1,7 @@
 const base_colors = {
   white: '#ffffff',
   black: '#000000',
+  gray: '#848484',
 }
 
 const custom_colors = {
@@ -12,7 +13,9 @@ const custom_colors = {
   light_red: '#ff000052',
   bright_red: '#ffcece',
   dark_red: '#840000',
-  light_blue: '#7ba0ff',
+  purple: '#775DA6',
+  dark_blue: '#70B6C1',
+  light_blue: '#ABDFE7',
 }
 
 export const colors = { ...base_colors, ...custom_colors }
