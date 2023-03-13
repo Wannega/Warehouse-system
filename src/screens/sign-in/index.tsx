@@ -3,11 +3,24 @@
 import { Input, Logo, Button } from "@components";
 
 import { t } from "@i18n";
+import {
+  loginMutation,
+  LoginMutation,
+  UsersPermissionsLoginInput as LoginInput,
+} from "@schemas";
 import Link from "next/link";
+import { Controller, useForm } from "react-hook-form";
+import { useMutation } from "react-relay";
 import styled from "styled-components";
 import { prop } from "styled-tools";
 
 export const SignInPage: React.FC = () => {
+  const { control, handleSubmit, register } = useForm<LoginInput>();
+  const [login] = useMutation<loginMutation>(LoginMutation);
+
+  const handleLogin = (data: LoginInput) =>
+    login({ variables: { input: data } });
+
   return (
     <Page>
       <Section>
@@ -17,10 +30,10 @@ export const SignInPage: React.FC = () => {
         <Description>{t("auth.description")}</Description>
       </Section>
       <Section>
-        <Form>
+        <Form onSubmit={handleSubmit(handleLogin)}>
           <h2>Вход</h2>
-          <Input type={"email"} />
-          <Input withVisibility type={"password"} />
+          <Input {...register("identifier")} type={"email"} />
+          <Input {...register("password")} withVisibility type={"password"} />
           <Recover href="/password-recover">Забыли пароль?</Recover>
           <Button type="submit">Войти</Button>
           <Sep />

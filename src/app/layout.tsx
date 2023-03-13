@@ -2,14 +2,9 @@
 
 import { lightTheme, GlobalStyle } from "@themes";
 import { ThemeProvider } from "styled-components";
-import { Inter } from "next/font/google";
 import StyledComponentsRegistry from "@lib/registry";
-
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-});
+import { RelayEnvironmentProvider } from "react-relay";
+import { environment } from "@Environment";
 
 interface Props {
   children: React.ReactNode;
@@ -17,14 +12,16 @@ interface Props {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en">
       <body>
-        <StyledComponentsRegistry>
+        <RelayEnvironmentProvider environment={environment}>
+          <StyledComponentsRegistry>
             <ThemeProvider theme={lightTheme}>
               <GlobalStyle />
               {children}
             </ThemeProvider>
-        </StyledComponentsRegistry>
+          </StyledComponentsRegistry>
+        </RelayEnvironmentProvider>
       </body>
     </html>
   );
